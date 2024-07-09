@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancel</title>
+    <link href={% static "booking/cancel.css" %} rel='stylesheet'>
+</head>
+
+<body>
+
+    <div class="header">
+        <a href="/">
+            <div class="title">Bukasho</div>
+        </a>
+        <div class="nav-buttons">
+            <a href="/"><button>Book</button></a>
+            <a href="/cancel"><button>Cancel</button></a>
+            <a href="/real-admin"><button>Manage</button></a>
+        </div>
+    </div>
+    
+    {% if not seats %}
+    <div class="textbox-container">
+        <form action="/cancel" method="post">{% csrf_token %}
+            <input type="text" class="textbox" placeholder="Enter booking ID" name="id">
+            <input type="submit" value="Get">
+        </form>
+    </div>
+    {% endif %}
+
+    {% if seats %}
+    <div class="seat-container">
+        <form action="/cancel" method="post">{% csrf_token %}
+            {% for seat in seats %}
+            {% if seat.number == 1 %}<div class="row">{% endif %}
+                <input type="checkbox" {% if seat in user_seats %} value={{seat.id}} {% endif %} 
+                name="seat" id="{{seat.row}}{{seat.number}}" class="seat-checkbox"
+                {% if seat not in user_seats %} disabled {%endif %} 
+                {% if seat in user_seats %} checked value = {{uid}} {% endif %} />
+                <label for="{{seat.row}}{{seat.number}}" class="seat">{{seat.row}}{{seat.number}}</label>
+                {% if seat.number == 4 %}<div class="gap"></div>{% endif %}
+                {%if seat.number == 8 %}
+            </div><br>{% endif %}
+            {% endfor %}
+            <input type="hidden" name="uid" value="{{uid}}">
+            <br><br>
+            <input type="submit" value="Confirm">
+        </form>
+    </div>
+    {% endif %}
+
+    {% if pop %}
+    <div class="pop">
+        <p>Cancelled seats {% for seat in pop %} {{seat.row}}{{seat.number}} {% endfor %}</p>
+    </div>
+    {% endif %}
+
+    <footer>
+        <a href="//github.com/elekind">
+          <p> github.com/elekind </p>
+        </a>
+    </footer>
+
+</body>
+
+</html>

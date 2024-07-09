@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href={% static "booking/shows.css" %} rel='stylesheet'>
+  <title>Bukasho</title>
+</head>
+
+<body>
+  <div class="header">
+    <a href="/">
+      <div class="title">Bukasho</div>
+    </a>
+    <div class="nav-buttons">
+      <a href=""><button>Book</button></a>
+      <a href="/cancel"><button>Cancel</button></a>
+      <a href="/real-admin"><button>Manage</button></a>
+    </div>
+  </div>
+
+  <div class="shows">
+    {% for show in showtimes %}
+    <a href="/shows/{{show.id}}/seats">
+      <ul>{{show.start|date:"g:i A. l, j M, Y."}}</ul>
+    </a>
+    {% endfor %}
+  </div>
+
+  <footer>
+    <a href="//github.com/elekind">
+      <p> github.com/elekind </p>
+    </a>
+  </footer>
+
+</body>
+</html>  

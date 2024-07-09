@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href = {% static "booking/main.css" %} rel = 'stylesheet'>
+  <title>Bukasho</title>
+</head>
+
+<body>
+  <div class="header">
+    <a href="/"><div class="title">Bukasho</div></a>
+    <div class="nav-buttons">
+      <a href="/"><button>Book</button></a>
+      <a href="/cancel"><button>Cancel</button></a>
+      <a href="/real-admin"><button>Manage</button></a>
+    </div>
+  </div>
+
+  <div class="movies-container">
+     {% for movie in movies %}
+    <div class="movie">
+      <a href="/{{movie.1}}/shows">
+        <img src= "static/booking/posters/{{movie.1}}.jpg" alt="Movie Poster" ></a><!-- Recheck this-->
+      <div class="movie-title">{{movie.0}}</div>
+    </div>
+     {% endfor %} 
+  </div>
+
+  <footer>
+    <a href="//github.com/elekind"><p> github.com/elekind </p></a>
+  </footer>
+</body>
+
+</html>
